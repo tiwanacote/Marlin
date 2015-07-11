@@ -3,6 +3,37 @@
 
 #include "boards.h"
 
+// ****************************************************************************************
+// ******************  Buscar TRMKR para cambios en máquina  *******************************
+
+// 1_TRMKR - Definición de BAUDRATE de comunicación:                                A DEFINIR
+// 2_TRMKR - Definición de placa a usar. En este caso es la:                        BOARD_RUMBA 
+// 3_TRMKR: Cantidad de extrusores:                                                 1
+// 4_TRMKR - Definición del tipo de termistor del extrusor N° 0 a usar:             A DEFINIR
+// 5_TRMKR - Definición del tipo de termistor del extrusor N° 1 a usar:             0 (Not used)
+// 6_TRMKR - Definición del tipo de termistor del extrusor N° 2 a usar:             0 (Not used)
+// 7_TRMKR - Definición del tipo de termistor de cama a usar:                       A DEFINIR
+// 8_TRMKR: Temperatura máxima de extrusor con componentes de plástico internos:    255 (°C)
+// 9_TRMKR: Temperatura máxima de cama:                                             120 (°C)
+// 10_TRMKR: Temperatura mínima a la que no deja extruir:                           180 (°C)
+// 11_TRMKR: Activada la protección del extrusor si se desconecta el termistor:     ACTIVE
+// 12_TRMKR: Activada la protección de la cama si se desconecta el termistor:       ACTIVE
+// 13_TRMKR: Pull-Up resistors desactivado. Se usan "Active limit switch":          DISABLE
+// 14_TRMKR: Limites de fin de carrera máximos:                                     DISABLE
+// 15_TRMKR: Desactivar motor X uando no se usa:                                    TRUE
+// 16_TRMKR: Desactivar motor Y uando no se usa:                                    TRUE
+// 17_TRMKR: Desactivar motor Z uando no se usa:                                    TRUE
+// 18_TRMKR: Desactivar motor E uando no se usa:                                    TRUE
+// 19_TRMKR: Posición absoluta máxima de X:                                         280
+// 20_TRMKR: Posición absoluta mínima de X:                                         0
+// 21_TRMKR: Posición absoluta máxima de Y:                                         200
+// 22_TRMKR: Posición absoluta mínima de Y:                                         0
+// 23_TRMKR: Posición absoluta máxima de Z:                                         150
+// 24_TRMKR: Posición absoluta mínima de Z:                                         0
+// 25_TRMKR: Velocidad para ir a HOME:                                              {1000, 1000, 500, 0}
+      
+// ****************************************************************************************
+
 // This configuration file contains the basic settings.
 // Advanced settings can be found in Configuration_adv.h
 // BASIC SETTINGS: select your board type, temperature sensor type, axis scaling, and endstop configuration
@@ -36,7 +67,7 @@
 #define SERIAL_PORT 0
 
 // This determines the communication speed of the printer
-#define BAUDRATE 250000
+#define BAUDRATE 250000          // 1_TRMKR: A DEFINIR
 
 // This enables the serial port associated to the Bluetooth interface
 //#define BTENABLED              // Enable BT interface on AT90USB devices
@@ -44,7 +75,7 @@
 // The following define selects which electronics board you have.
 // Please choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-  #define MOTHERBOARD BOARD_ULTIMAKER
+  #define MOTHERBOARD BOARD_RUMBA   // 2_TRMKR: Colocar BOARD_RUMBA
 #endif
 
 // Define this to set a custom name for your generic Mendel,
@@ -55,7 +86,7 @@
 // #define MACHINE_UUID "00000000-0000-0000-0000-000000000000"
 
 // This defines the number of extruders
-#define EXTRUDERS 1
+#define EXTRUDERS 1                 // 3_TRMKR: Cantidad de extrusores
 
 //// The following define selects which power supply you have. Please choose the one that matches your setup
 // 1 = ATX
@@ -104,10 +135,10 @@
 // 147 is Pt100 with 4k7 pullup
 // 110 is Pt100 with 1k pullup (non standard)
 
-#define TEMP_SENSOR_0 -1
-#define TEMP_SENSOR_1 -1
-#define TEMP_SENSOR_2 0
-#define TEMP_SENSOR_BED 0
+#define TEMP_SENSOR_0 -1        // 4_TRMKR: A DEFINIR
+#define TEMP_SENSOR_1 0         // 5_TRMKR: No es utilizado
+#define TEMP_SENSOR_2 0         // 6_TRMKR: No es utilizado
+#define TEMP_SENSOR_BED 0       // 7_TRMKR: A DEFINIR
 
 // This makes temp sensor 1 a redundant sensor for sensor 0. If the temperatures difference between these sensors is to high the print will be aborted.
 //#define TEMP_SENSOR_1_AS_REDUNDANT
@@ -129,10 +160,10 @@
 // When temperature exceeds max temp, your heater will be switched off.
 // This feature exists to protect your hotend from overheating accidentally, but *NOT* from thermistor short/failure!
 // You should use MINTEMP for thermistor short/failure protection.
-#define HEATER_0_MAXTEMP 275
+#define HEATER_0_MAXTEMP 255        // 8_TRMKR: Temperatura máxima debería estar a no mas de 255°C si hay componentes de plástico internos
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
-#define BED_MAXTEMP 150
+#define BED_MAXTEMP 120             // 9_TRMKR: Temperatura máxima de cama limitada
 
 // If your bed has low resistance e.g. .6 ohm and throws the fuse you can duty cycle it to reduce the
 // average current. The value should be an integer and the heat bed will be turned on for 1 interval of
@@ -219,7 +250,7 @@
 //if PREVENT_DANGEROUS_EXTRUDE is on, you can still disable (uncomment) very long bits of extrusion separately.
 #define PREVENT_LENGTHY_EXTRUDE
 
-#define EXTRUDE_MINTEMP 170
+#define EXTRUDE_MINTEMP 180           // 10_TRMKR: Temperatura mínima a la que no deja extruir
 #define EXTRUDE_MAXLENGTH (X_MAX_LENGTH+Y_MAX_LENGTH) //prevent extrusion of very large distances.
 
 /*================== Thermal Runaway Protection ==============================
@@ -248,15 +279,15 @@ your extruder heater takes 2 minutes to hit the target on heating.
 // uncomment the 2 defines below:
 
 // Parameters for all extruder heaters
-//#define THERMAL_RUNAWAY_PROTECTION_PERIOD 40 //in seconds
-//#define THERMAL_RUNAWAY_PROTECTION_HYSTERESIS 4 // in degree Celsius
+#define THERMAL_RUNAWAY_PROTECTION_PERIOD 40 //in seconds                 // 11_TRMKR: Activada la protección del extrusor si se desconecta el termistor 
+#define THERMAL_RUNAWAY_PROTECTION_HYSTERESIS 4 // in degree Celsius      // 11_TRMKR: Activada la protección del extrusor si se desconecta el termistor
 
 // If you want to enable this feature for your bed heater,
 // uncomment the 2 defines below:
 
 // Parameters for the bed heater
-//#define THERMAL_RUNAWAY_PROTECTION_BED_PERIOD 20 //in seconds
-//#define THERMAL_RUNAWAY_PROTECTION_BED_HYSTERESIS 2 // in degree Celsius
+#define THERMAL_RUNAWAY_PROTECTION_BED_PERIOD 20 //in seconds             // 12_TRMKR: Activada la protección de la cama si se desconecta el termistor
+#define THERMAL_RUNAWAY_PROTECTION_BED_HYSTERESIS 2 // in degree Celsius  // 12_TRMKR: Activada la protección de la cama si se desconecta el termistor
 //===========================================================================
 
 
@@ -268,7 +299,7 @@ your extruder heater takes 2 minutes to hit the target on heating.
 // #define COREXY
 
 // coarse Endstop Settings
-#define ENDSTOPPULLUPS // Comment this out (using // at the start of the line) to disable the endstop pullup resistors
+//#define ENDSTOPPULLUPS // Comment this out (using // at the start of the line) to disable the endstop pullup resistors  // 13_TRMKR: Pull-Up resistors desactivado. Se usan "Active limit switch"
 
 #ifndef ENDSTOPPULLUPS
   // fine endstop settings: Individual pullups. will be ignored if ENDSTOPPULLUPS is defined
@@ -296,7 +327,8 @@ const bool Z_MIN_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 const bool X_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
 const bool Y_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
 const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of the endstop.
-//#define DISABLE_MAX_ENDSTOPS
+
+#define DISABLE_MAX_ENDSTOPS              // 14_TRMKR: Limites de fin de carrera máximos desactivados.
 //#define DISABLE_MIN_ENDSTOPS
 
 // Disable max endstops for compatibility with endstop checking routine
@@ -311,18 +343,18 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define E_ENABLE_ON 0 // For all extruders
 
 // Disables axis when it's not being used.
-#define DISABLE_X false
-#define DISABLE_Y false
-#define DISABLE_Z false
-#define DISABLE_E false // For all extruders
+#define DISABLE_X false                             // 15_TRMKR: Desactivar motor X uando no se usa.
+#define DISABLE_Y false                             // 16_TRMKR: Desactivar motor X uando no se usa.
+#define DISABLE_Z false                             // 17_TRMKR: Desactivar motor X uando no se usa.
+#define DISABLE_E false // For all extruders        // 18_TRMKR: Desactivar motor X uando no se usa.
 #define DISABLE_INACTIVE_EXTRUDER true //disable only inactive extruders and keep active extruder enabled
 
-#define INVERT_X_DIR true    // for Mendel set to false, for Orca set to true
-#define INVERT_Y_DIR false    // for Mendel set to true, for Orca set to false
-#define INVERT_Z_DIR true     // for Mendel set to false, for Orca set to true
-#define INVERT_E0_DIR false   // for direct drive extruder v9 set to true, for geared extruder set to false
+#define INVERT_X_DIR true      // for Mendel set to false, for Orca set to true
+#define INVERT_Y_DIR false     // for Mendel set to true, for Orca set to false
+#define INVERT_Z_DIR true      // for Mendel set to false, for Orca set to true
+#define INVERT_E0_DIR false    // for direct drive extruder v9 set to true, for geared extruder set to false
 #define INVERT_E1_DIR false    // for direct drive extruder v9 set to true, for geared extruder set to false
-#define INVERT_E2_DIR false   // for direct drive extruder v9 set to true, for geared extruder set to false
+#define INVERT_E2_DIR false    // for direct drive extruder v9 set to true, for geared extruder set to false
 
 // ENDSTOP SETTINGS:
 // Sets direction of endstops when homing; 1=MAX, -1=MIN
@@ -330,20 +362,22 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
 
-#define min_software_endstops true // If true, axis won't move to coordinates less than HOME_POS.
+#define min_software_endstops true  // If true, axis won't move to coordinates less than HOME_POS.
 #define max_software_endstops true  // If true, axis won't move to coordinates greater than the defined lengths below.
 
 // Travel limits after homing
-#define X_MAX_POS 205
-#define X_MIN_POS 0
-#define Y_MAX_POS 205
-#define Y_MIN_POS 0
-#define Z_MAX_POS 200
-#define Z_MIN_POS 0
+#define X_MAX_POS 280                         // 19_TRMKR: Posición absoluta máxima de X
+#define X_MIN_POS 0                           // 20_TRMKR: Posición absoluta mínima de X
+#define Y_MAX_POS 200                         // 21_TRMKR: Posición absoluta máxima de Y
+#define Y_MIN_POS 0                           // 22_TRMKR: Posición absoluta mínima de Y
+#define Z_MAX_POS 150                         // 23_TRMKR: Posición absoluta máxima de Z
+#define Z_MIN_POS 0                           // 24_TRMKR: Posición absoluta mínima de Z
 
 #define X_MAX_LENGTH (X_MAX_POS - X_MIN_POS)
 #define Y_MAX_LENGTH (Y_MAX_POS - Y_MIN_POS)
 #define Z_MAX_LENGTH (Z_MAX_POS - Z_MIN_POS)
+
+
 //============================= Bed Auto Leveling ===========================
 
 //#define ENABLE_AUTO_BED_LEVELING // Delete the comment to enable (remove // at the start of the line)
@@ -404,7 +438,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
   #define Z_RAISE_BEFORE_HOMING 4       // (in mm) Raise Z before homing (G28) for Probe Clearance.
                                         // Be sure you have this distance over your Z_MAX_POS in case
 
-  #define XY_TRAVEL_SPEED 8000         // X and Y axis travel speed between probes, in mm/min
+  #define XY_TRAVEL_SPEED 1000         // X and Y axis travel speed between probes, in mm/min
 
   #define Z_RAISE_BEFORE_PROBING 15    //How much the extruder will be raised before traveling to the first probing point.
   #define Z_RAISE_BETWEEN_PROBINGS 5  //How much the extruder will be raised when traveling from between next probing points
@@ -475,7 +509,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 //// MOVEMENT SETTINGS
 #define NUM_AXIS 4 // The axis order in all axis related arrays is X, Y, Z, E
-#define HOMING_FEEDRATE {50*60, 50*60, 4*60, 0}  // set the homing speeds (mm/min)
+#define HOMING_FEEDRATE {1000, 1000, 500, 0}  // set the homing speeds (mm/min)      // 25_TRMKR: Velocidad para ir a HOME
 
 // default settings
 
