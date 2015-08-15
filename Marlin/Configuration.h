@@ -6,15 +6,15 @@
 // ****************************************************************************************
 // ******************  Buscar TRMKR para cambios en máquina  *******************************
 
-// 1_TRMKR - Definición de BAUDRATE de comunicación:                                A DEFINIR
+// 1_TRMKR - Definición de BAUDRATE de comunicación:                                250000
 // 2_TRMKR - Definición de placa a usar. En este caso es la:                        BOARD_RUMBA 
-// 3_TRMKR: Cantidad de extrusores:                                                 1
-// 4_TRMKR - Definición del tipo de termistor del extrusor N° 0 a usar:             A DEFINIR
+// 3_TRMKR - Cantidad de extrusores:                                                1
+// 4_TRMKR - Definición del tipo de termistor del extrusor N° 0 a usar:             14 - Tabla definida por usuario (Termistor de mercado libre)
 // 5_TRMKR - Definición del tipo de termistor del extrusor N° 1 a usar:             0 (Not used)
 // 6_TRMKR - Definición del tipo de termistor del extrusor N° 2 a usar:             0 (Not used)
-// 7_TRMKR - Definición del tipo de termistor de cama a usar:                       A DEFINIR
-// 8_TRMKR: Temperatura máxima de extrusor con componentes de plástico internos:    255 (°C)
-// 9_TRMKR: Temperatura máxima de cama:                                             120 (°C)
+// 7_TRMKR - Definición del tipo de termistor de cama a usar:                       2 - 200K Thermistor
+// 8_TRMKR - Temperatura máxima de extrusor con componentes de plástico internos:   255 (°C)
+// 9_TRMKR - Temperatura máxima de cama:                                            120 (°C)
 // 10_TRMKR: Temperatura mínima a la que no deja extruir:                           180 (°C)
 // 11_TRMKR: Activada la protección del extrusor si se desconecta el termistor:     ACTIVE
 // 12_TRMKR: Activada la protección de la cama si se desconecta el termistor:       ACTIVE
@@ -30,7 +30,15 @@
 // 22_TRMKR: Posición absoluta mínima de Y:                                         0
 // 23_TRMKR: Posición absoluta máxima de Z:                                         150
 // 24_TRMKR: Posición absoluta mínima de Z:                                         0
-// 25_TRMKR: Velocidad para ir a HOME:                                              {1000, 1000, 500, 0}
+// 25_TRMKR: Velocidad para ir a HOME:                                              {1000, 1000, 500, 0} [mm/min]
+// 26_TRMKR: MAX BED Power:                                                         220
+// 27_TRMKR: Steps/mm:                                                              {80,80,400,96.2752}
+// 28_TRMKR: Máximas Velocidades:                                                   {120, 120, 5, 25} [mm/seg]
+// 30_TRMKR: Máximas Aceleaiones:                                                   {1000,1000,25,4000}
+// 31_TRMKR: Jerk XY:                                                               20.0  (mm/sec) 
+// 32_TRMKR: Jerk Z :                                                               0.4   (mm/sec)
+// 33_TRMKR: Jerk E :                                                               5.0   (mm/sec)
+// 34_TRMKR: MAX EXTRUDER Power:                                                    200
       
 // ****************************************************************************************
 
@@ -67,15 +75,15 @@
 #define SERIAL_PORT 0
 
 // This determines the communication speed of the printer
-#define BAUDRATE 250000          // 1_TRMKR: A DEFINIR
+#define BAUDRATE 250000               // 1_TRMKR: Baudrate 250000
 
 // This enables the serial port associated to the Bluetooth interface
-//#define BTENABLED              // Enable BT interface on AT90USB devices
+//#define BTENABLED                   // Enable BT interface on AT90USB devices
 
 // The following define selects which electronics board you have.
 // Please choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-  #define MOTHERBOARD BOARD_RUMBA   // 2_TRMKR: Colocar BOARD_RUMBA
+  #define MOTHERBOARD BOARD_RUMBA     // 2_TRMKR: Colocar BOARD_RUMBA
 #endif
 
 // Define this to set a custom name for your generic Mendel,
@@ -98,34 +106,34 @@
 // #define PS_DEFAULT_OFF
 
 //===========================================================================
-//=============================Thermal Settings  ============================
+//=============================  Thermal Settings  ==========================
 //===========================================================================
 //
-//--NORMAL IS 4.7kohm PULLUP!-- 1kohm pullup can be used on hotend sensor, using correct resistor and table
+// NORMAL IS 4.7kohm PULLUP!-- 1kohm pullup can be used on hotend sensor, using correct resistor and table
 //
-//// Temperature sensor settings:
+// Temperature sensor settings:
 // -2 is thermocouple with MAX6675 (only for sensor 0)
 // -1 is thermocouple with AD595
-// 0 is not used
-// 1 is 100k thermistor - best choice for EPCOS 100k (4.7k pullup)
-// 2 is 200k thermistor - ATC Semitec 204GT-2 (4.7k pullup)
-// 3 is Mendel-parts thermistor (4.7k pullup)
-// 4 is 10k thermistor !! do not use it for a hotend. It gives bad resolution at high temp. !!
-// 5 is 100K thermistor - ATC Semitec 104GT-2 (Used in ParCan & J-Head) (4.7k pullup)
-// 6 is 100k EPCOS - Not as accurate as table 1 (created using a fluke thermocouple) (4.7k pullup)
-// 7 is 100k Honeywell thermistor 135-104LAG-J01 (4.7k pullup)
+//  0 is not used
+//  1 is 100k thermistor - best choice for EPCOS 100k (4.7k pullup)
+//  2 is 200k thermistor - ATC Semitec 204GT-2 (4.7k pullup)
+//  3 is Mendel-parts thermistor (4.7k pullup)
+//  4 is 10k thermistor !! do not use it for a hotend. It gives bad resolution at high temp. !!
+//  5 is 100K thermistor - ATC Semitec 104GT-2 (Used in ParCan & J-Head) (4.7k pullup)
+//  6 is 100k EPCOS - Not as accurate as table 1 (created using a fluke thermocouple) (4.7k pullup)
+//  7 is 100k Honeywell thermistor 135-104LAG-J01 (4.7k pullup)
 // 71 is 100k Honeywell thermistor 135-104LAF-J01 (4.7k pullup)
-// 8 is 100k 0603 SMD Vishay NTCS0603E3104FXT (4.7k pullup)
-// 9 is 100k GE Sensing AL03006-58.2K-97-G1 (4.7k pullup)
+//  8 is 100k 0603 SMD Vishay NTCS0603E3104FXT (4.7k pullup)
+//  9 is 100k GE Sensing AL03006-58.2K-97-G1 (4.7k pullup)
 // 10 is 100k RS thermistor 198-961 (4.7k pullup)
 // 11 is 100k beta 3950 1% thermistor (4.7k pullup)
 // 12 is 100k 0603 SMD Vishay NTCS0603E3104FXT (4.7k pullup) (calibrated for Makibox hot bed)
 // 13 is 100k Hisens 3950  1% up to 300°C for hotend "Simple ONE " & "Hotend "All In ONE" 
+// 14 USER DEFINED Thermistor table - Modificado por MAXI
 // 20 is the PT100 circuit found in the Ultimainboard V2.x
 // 60 is 100k Maker's Tool Works Kapton Bed Thermistor beta=3950
 //
-//    1k ohm pullup tables - This is not normal, you would have to have changed out your 4.7k for 1k
-//                          (but gives greater accuracy and more stable PID)
+// 1k ohm pullup tables - This is not normal, you would have to have changed out your 4.7k for 1k (but gives greater accuracy and more stable PID)
 // 51 is 100k thermistor - EPCOS (1k pullup)
 // 52 is 200k thermistor - ATC Semitec 204GT-2 (1k pullup)
 // 55 is 100k thermistor - ATC Semitec 104GT-2 (Used in ParCan & J-Head) (1k pullup)
@@ -135,10 +143,10 @@
 // 147 is Pt100 with 4k7 pullup
 // 110 is Pt100 with 1k pullup (non standard)
 
-#define TEMP_SENSOR_0 -1        // 4_TRMKR: A DEFINIR
-#define TEMP_SENSOR_1 0         // 5_TRMKR: No es utilizado
-#define TEMP_SENSOR_2 0         // 6_TRMKR: No es utilizado
-#define TEMP_SENSOR_BED 0       // 7_TRMKR: A DEFINIR
+#define TEMP_SENSOR_0   14       // 4_TRMKR: Termistor de mercado libre
+#define TEMP_SENSOR_1    0       // 5_TRMKR: No es utilizado
+#define TEMP_SENSOR_2    0       // 6_TRMKR: No es utilizado
+#define TEMP_SENSOR_BED  2       // 7_TRMKR: Termistor que viene con la cama
 
 // This makes temp sensor 1 a redundant sensor for sensor 0. If the temperatures difference between these sensors is to high the print will be aborted.
 //#define TEMP_SENSOR_1_AS_REDUNDANT
@@ -161,8 +169,8 @@
 // This feature exists to protect your hotend from overheating accidentally, but *NOT* from thermistor short/failure!
 // You should use MINTEMP for thermistor short/failure protection.
 #define HEATER_0_MAXTEMP 255        // 8_TRMKR: Temperatura máxima debería estar a no mas de 255°C si hay componentes de plástico internos
-#define HEATER_1_MAXTEMP 275
-#define HEATER_2_MAXTEMP 275
+#define HEATER_1_MAXTEMP 255
+#define HEATER_2_MAXTEMP 255
 #define BED_MAXTEMP 120             // 9_TRMKR: Temperatura máxima de cama limitada
 
 // If your bed has low resistance e.g. .6 ohm and throws the fuse you can duty cycle it to reduce the
@@ -177,8 +185,8 @@
 // PID settings:
 // Comment the following line to disable PID and enable bang-bang.
 #define PIDTEMP
-#define BANG_MAX 255 // limits current to nozzle while in bang-bang mode; 255=full current
-#define PID_MAX BANG_MAX // limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
+#define BANG_MAX 200                    // limits current to nozzle while in bang-bang mode; 255=full current
+#define PID_MAX BANG_MAX                // 34_TRMKR: MAX EXTRUDER Power - Limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
 #ifdef PIDTEMP
   //#define PID_DEBUG // Sends debug data to the serial port.
   //#define PID_OPENLOOP 1 // Puts PID in open loop. M104/M140 sets the output power from 0 to PID_MAX
@@ -195,15 +203,7 @@
     #define  DEFAULT_Ki 1.08
     #define  DEFAULT_Kd 114
 
-// MakerGear
-//    #define  DEFAULT_Kp 7.0
-//    #define  DEFAULT_Ki 0.1
-//    #define  DEFAULT_Kd 12
 
-// Mendel Parts V9 on 12V
-//    #define  DEFAULT_Kp 63.0
-//    #define  DEFAULT_Ki 2.25
-//    #define  DEFAULT_Kd 440
 #endif // PIDTEMP
 
 // Bed Temperature Control
@@ -224,22 +224,18 @@
 // all forms of bed control obey this (PID, bang-bang, bang-bang with hysteresis)
 // setting this to anything other than 255 enables a form of PWM to the bed just like HEATER_BED_DUTY_CYCLE_DIVIDER did,
 // so you shouldn't use it unless you are OK with PWM on your bed.  (see the comment on enabling PIDTEMPBED)
-#define MAX_BED_POWER 255 // limits duty cycle to bed; 255=full current
+#define MAX_BED_POWER 220           // 26_TRMKR: MAX BED Power - Limits duty cycle to bed; 255=full current
 
 #ifdef PIDTEMPBED
-//120v 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
-//from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
-    #define  DEFAULT_bedKp 10.00
-    #define  DEFAULT_bedKi .023
-    #define  DEFAULT_bedKd 305.4
+  //120v 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
+  //from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
+  
+  #define  DEFAULT_bedKp 10.00
+  #define  DEFAULT_bedKi .023
+  #define  DEFAULT_bedKd 305.4
 
-//120v 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
-//from pidautotune
-//    #define  DEFAULT_bedKp 97.1
-//    #define  DEFAULT_bedKi 1.41
-//    #define  DEFAULT_bedKd 1675.16
+  // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 
-// FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
 
 
@@ -250,8 +246,8 @@
 //if PREVENT_DANGEROUS_EXTRUDE is on, you can still disable (uncomment) very long bits of extrusion separately.
 #define PREVENT_LENGTHY_EXTRUDE
 
-#define EXTRUDE_MINTEMP 180           // 10_TRMKR: Temperatura mínima a la que no deja extruir
-#define EXTRUDE_MAXLENGTH (X_MAX_LENGTH+Y_MAX_LENGTH) //prevent extrusion of very large distances.
+#define EXTRUDE_MINTEMP 180                               // 10_TRMKR: Temperatura mínima a la que no deja extruir
+#define EXTRUDE_MAXLENGTH (X_MAX_LENGTH+Y_MAX_LENGTH)     // Prevent extrusion of very large distances.
 
 /*================== Thermal Runaway Protection ==============================
 This is a feature to protect your printer from burn up in flames if it has
@@ -288,7 +284,7 @@ your extruder heater takes 2 minutes to hit the target on heating.
 // Parameters for the bed heater
 #define THERMAL_RUNAWAY_PROTECTION_BED_PERIOD 20 //in seconds             // 12_TRMKR: Activada la protección de la cama si se desconecta el termistor
 #define THERMAL_RUNAWAY_PROTECTION_BED_HYSTERESIS 2 // in degree Celsius  // 12_TRMKR: Activada la protección de la cama si se desconecta el termistor
-//===========================================================================
+
 
 
 //===========================================================================
@@ -343,16 +339,16 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define E_ENABLE_ON 0 // For all extruders
 
 // Disables axis when it's not being used.
-#define DISABLE_X false                             // 15_TRMKR: Desactivar motor X uando no se usa.
-#define DISABLE_Y false                             // 16_TRMKR: Desactivar motor X uando no se usa.
-#define DISABLE_Z false                             // 17_TRMKR: Desactivar motor X uando no se usa.
-#define DISABLE_E false // For all extruders        // 18_TRMKR: Desactivar motor X uando no se usa.
+#define DISABLE_X false                             // 15_TRMKR: Desactivar motor X cuando no se usa.
+#define DISABLE_Y false                             // 16_TRMKR: Desactivar motor Y cuando no se usa.
+#define DISABLE_Z false                             // 17_TRMKR: Desactivar motor Z cuando no se usa.
+#define DISABLE_E false // For all extruders        // 18_TRMKR: Desactivar motor E cuando no se usa.
 #define DISABLE_INACTIVE_EXTRUDER true //disable only inactive extruders and keep active extruder enabled
 
 #define INVERT_X_DIR true      // for Mendel set to false, for Orca set to true
-#define INVERT_Y_DIR false     // for Mendel set to true, for Orca set to false
-#define INVERT_Z_DIR true      // for Mendel set to false, for Orca set to true
-#define INVERT_E0_DIR false    // for direct drive extruder v9 set to true, for geared extruder set to false
+#define INVERT_Y_DIR true      // for Mendel set to true, for Orca set to false
+#define INVERT_Z_DIR false      // for Mendel set to false, for Orca set to true
+#define INVERT_E0_DIR false     // for direct drive extruder v9 set to true, for geared extruder set to false
 #define INVERT_E1_DIR false    // for direct drive extruder v9 set to true, for geared extruder set to false
 #define INVERT_E2_DIR false    // for direct drive extruder v9 set to true, for geared extruder set to false
 
@@ -366,11 +362,11 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define max_software_endstops true  // If true, axis won't move to coordinates greater than the defined lengths below.
 
 // Travel limits after homing
-#define X_MAX_POS 280                         // 19_TRMKR: Posición absoluta máxima de X
+#define X_MAX_POS 264                         // 19_TRMKR: Posición absoluta máxima de X
 #define X_MIN_POS 0                           // 20_TRMKR: Posición absoluta mínima de X
-#define Y_MAX_POS 200                         // 21_TRMKR: Posición absoluta máxima de Y
+#define Y_MAX_POS 180                         // 21_TRMKR: Posición absoluta máxima de Y
 #define Y_MIN_POS 0                           // 22_TRMKR: Posición absoluta mínima de Y
-#define Z_MAX_POS 150                         // 23_TRMKR: Posición absoluta máxima de Z
+#define Z_MAX_POS 130                         // 23_TRMKR: Posición absoluta máxima de Z
 #define Z_MIN_POS 0                           // 24_TRMKR: Posición absoluta mínima de Z
 
 #define X_MAX_LENGTH (X_MAX_POS - X_MIN_POS)
@@ -511,14 +507,14 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define NUM_AXIS 4 // The axis order in all axis related arrays is X, Y, Z, E
 #define HOMING_FEEDRATE {1000, 1000, 500, 0}  // set the homing speeds (mm/min)      // 25_TRMKR: Velocidad para ir a HOME
 
+
 // default settings
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,400,96.2752}    // 27_TRMKR: Steps/mm -  default steps per unit for Ultimaker - {78.7402,78.7402,200.0*8/3,760*1.1}
+#define DEFAULT_MAX_FEEDRATE          {120, 120, 5, 25}      // 28_TRMKR: Máximas Velocidades (mm/sec)
+#define DEFAULT_MAX_ACCELERATION      {500,500,25,4000}      // 30_TRMKR: Máximas Aceleraiones - X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {78.7402,78.7402,200.0*8/3,760*1.1}  // default steps per unit for Ultimaker
-#define DEFAULT_MAX_FEEDRATE          {500, 500, 5, 25}    // (mm/sec)
-#define DEFAULT_MAX_ACCELERATION      {9000,9000,100,10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
-
-#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E max acceleration in mm/s^2 for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  3000   // X, Y, Z and E max acceleration in mm/s^2 for retracts
+#define DEFAULT_ACCELERATION          3000                   // X, Y, Z and E max acceleration in mm/s^2 for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  3000                   // X, Y, Z and E max acceleration in mm/s^2 for retracts
 
 // Offset of the extruders (uncomment if using more than one and relying on firmware to position when changing).
 // The offset has to be X=0, Y=0 for the extruder 0 hotend (default extruder).
@@ -527,16 +523,16 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 // #define EXTRUDER_OFFSET_Y {0.0, 5.00}  // (in mm) for each extruder, offset of the hotend on the Y axis
 
 // The speed change that does not require acceleration (i.e. the software might assume it can be done instantaneously)
-#define DEFAULT_XYJERK                20.0    // (mm/sec)
-#define DEFAULT_ZJERK                 0.4     // (mm/sec)
-#define DEFAULT_EJERK                 5.0    // (mm/sec)
+#define DEFAULT_XYJERK                20.0    //    31_TRMKR: Jerk XY - (mm/sec) 
+#define DEFAULT_ZJERK                 0.4     //    32_TRMKR: Jerk Z  - (mm/sec)
+#define DEFAULT_EJERK                 5.0     //    33_TRMKR: Jerk E  - (mm/sec)
 
 //===========================================================================
 //=============================Additional Features===========================
 //===========================================================================
 
 // Custom M code points
-#define CUSTOM_M_CODES
+//#define CUSTOM_M_CODES     VER MAXI - Comentado
 #ifdef CUSTOM_M_CODES
   #define CUSTOM_M_CODE_SET_Z_PROBE_OFFSET 851
   #define Z_PROBE_OFFSET_RANGE_MIN -15
@@ -557,12 +553,12 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 // Preheat Constants
 #define PLA_PREHEAT_HOTEND_TEMP 180
-#define PLA_PREHEAT_HPB_TEMP 70
+#define PLA_PREHEAT_HPB_TEMP 60
 #define PLA_PREHEAT_FAN_SPEED 255   // Insert Value between 0 and 255
 
 #define ABS_PREHEAT_HOTEND_TEMP 240
-#define ABS_PREHEAT_HPB_TEMP 100
-#define ABS_PREHEAT_FAN_SPEED 255   // Insert Value between 0 and 255
+#define ABS_PREHEAT_HPB_TEMP    100
+#define ABS_PREHEAT_FAN_SPEED     0   // Insert Value between 0 and 255
 
 //LCD and SD support
 //#define ULTRA_LCD  //general LCD support, also 16x2
@@ -583,7 +579,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 // The RepRapDiscount Smart Controller (white PCB)
 // http://reprap.org/wiki/RepRapDiscount_Smart_Controller
-//#define REPRAP_DISCOUNT_SMART_CONTROLLER
+#define REPRAP_DISCOUNT_SMART_CONTROLLER
 
 // The GADGETS3D G3D LCD/SD Controller (blue PCB)
 // http://reprap.org/wiki/RAMPS_1.3/1.4_GADGETS3D_Shield_with_Panel

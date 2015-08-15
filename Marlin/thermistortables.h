@@ -5,6 +5,54 @@
 
 #define OVERSAMPLENR 16
 
+
+// *****************************************************************************************************************
+// USER DEFINED Thermistor table - Agregado por MAXI
+// *****************************************************************************************************************
+
+#if (THERMISTORHEATER_0 == 14) || (THERMISTORHEATER_1 == 14) || (THERMISTORHEATER_2 == 14) || (THERMISTORBED == 14)
+// Termistor comprado en mercado libre
+
+const short temptable_14[][2] PROGMEM = {
+  
+{   48*OVERSAMPLENR ,         250     },
+{   51*OVERSAMPLENR ,         246     },
+{   56*OVERSAMPLENR ,         240     },
+{   60*OVERSAMPLENR ,         236     },
+{   66*OVERSAMPLENR ,         230     },
+{   71*OVERSAMPLENR ,         226     },
+{   79*OVERSAMPLENR ,         220     },
+{   84*OVERSAMPLENR ,         216     },
+{   93*OVERSAMPLENR ,         210     },
+{  100*OVERSAMPLENR ,         206     },
+{  111*OVERSAMPLENR ,         200     },
+{  120*OVERSAMPLENR ,         196     },
+{  133*OVERSAMPLENR ,         190     },
+{  143*OVERSAMPLENR ,         186     },
+{  160*OVERSAMPLENR ,         180     },
+{  192*OVERSAMPLENR ,         170     },
+{  230*OVERSAMPLENR ,         160     },
+{  275*OVERSAMPLENR ,         150     },
+{  327*OVERSAMPLENR ,         140     },
+{  387*OVERSAMPLENR ,         130     },
+{  453*OVERSAMPLENR ,         120     },
+{  524*OVERSAMPLENR ,         110     },
+{  598*OVERSAMPLENR ,         100     },
+{  742*OVERSAMPLENR ,         80      },
+{  806*OVERSAMPLENR ,         70      },
+{  860*OVERSAMPLENR ,         60      },
+{  905*OVERSAMPLENR ,         50      },
+{  941*OVERSAMPLENR ,         40      },
+{  968*OVERSAMPLENR ,         30      },
+{  987*OVERSAMPLENR ,         20      },
+{ 1000*OVERSAMPLENR ,         10      },
+{ 1009*OVERSAMPLENR ,         0       },
+
+ };
+#endif
+
+
+
 #if (THERMISTORHEATER_0 == 1) || (THERMISTORHEATER_1 == 1)  || (THERMISTORHEATER_2 == 1) || (THERMISTORBED == 1) //100k bed thermistor
 
 const short temptable_1[][2] PROGMEM = {

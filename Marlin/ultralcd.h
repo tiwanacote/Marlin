@@ -1,6 +1,8 @@
 #ifndef ULTRALCD_H
 #define ULTRALCD_H
 
+// VER MAXI BOTONES 2
+
 #include "Marlin.h"
 
 #ifdef ULTRA_LCD
@@ -13,10 +15,10 @@
   void lcd_reset_alert_level();
   bool lcd_detected(void);
 
-#ifdef DOGLCD
-  extern int lcd_contrast;
-  void lcd_setcontrast(uint8_t value);
-#endif
+  #ifdef DOGLCD
+    extern int lcd_contrast;
+    void lcd_setcontrast(uint8_t value);
+  #endif
 
   static unsigned char blink = 0;	// Variable for visualization of fan rotation in GLCD
 
@@ -27,13 +29,14 @@
   #define LCD_TIMEOUT_TO_STATUS 15000
 
   #ifdef ULTIPANEL
-  void lcd_buttons_update();
-  extern volatile uint8_t buttons;  //the last checked buttons in a bit array.
-  #ifdef REPRAPWORLD_KEYPAD
-    extern volatile uint8_t buttons_reprapworld_keypad; // to store the keypad shift register values
-  #endif
+    void lcd_buttons_update();
+    extern volatile uint8_t buttons;  //the last checked buttons in a bit array.
+    
+    #ifdef REPRAPWORLD_KEYPAD
+      extern volatile uint8_t buttons_reprapworld_keypad; // to store the keypad shift register values
+    #endif
   #else
-  FORCE_INLINE void lcd_buttons_update() {}
+    FORCE_INLINE void lcd_buttons_update() {}
   #endif
 
   extern int plaPreheatHotendTemp;
@@ -47,12 +50,11 @@
   extern bool cancel_heatup;
   
   #ifdef FILAMENT_LCD_DISPLAY
-        extern unsigned long message_millis;
+    extern unsigned long message_millis;
   #endif
     
   void lcd_buzz(long duration,uint16_t freq);
   bool lcd_clicked();
-
   void lcd_ignore_click(bool b=true);
 
   #ifdef NEWPANEL
@@ -61,6 +63,7 @@
     #define EN_A (1<<BLEN_A)
 
     #define LCD_CLICKED (buttons&EN_C)
+    
     #ifdef REPRAPWORLD_KEYPAD
   	  #define EN_REPRAPWORLD_KEYPAD_F3 (1<<BLEN_REPRAPWORLD_KEYPAD_F3)
   	  #define EN_REPRAPWORLD_KEYPAD_F2 (1<<BLEN_REPRAPWORLD_KEYPAD_F2)
@@ -81,7 +84,7 @@
   	  #define REPRAPWORLD_KEYPAD_MOVE_HOME (buttons_reprapworld_keypad&EN_REPRAPWORLD_KEYPAD_MIDDLE)
     #endif //REPRAPWORLD_KEYPAD
   #else
-    //atomic, do not change
+    //atomic, do not change - VER MAXI BOTONES 3
     #define B_LE (1<<BL_LE)
     #define B_UP (1<<BL_UP)
     #define B_MI (1<<BL_MI)

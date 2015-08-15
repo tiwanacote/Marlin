@@ -1341,6 +1341,9 @@ void lcd_setcontrast(uint8_t value)
 }
 #endif
 
+
+
+// VER MAXI BOTONES
 #ifdef ULTIPANEL
 /* Warning: This function is called from interrupt context */
 void lcd_buttons_update()
